@@ -1,0 +1,166 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<center style="color:white">
+<img src="{{=URL('static','images/registroprestamos.jpg')}}" width="98%">
+</center>
+{{end}}
+
+{{if 'message' in globals():}}
+<center style="padding:50px">
+  <a class="btn btn-secondary" href="{{=URL('default','index',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Inicio')}}</a>
+  <a class="btn btn-secondary" href="{{=URL('default','prestamo',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Registrar Préstamo')}}</a>
+  <a class="btn btn-secondary" href="{{=URL('default','devueltos',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Préstamos Devueltos')}}</a>
+     <a class="btn btn-secondary" href="{{=URL('default','estadisticas',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Estadísticas')}}</a>
+    <a class="btn btn-primary" href="{{=URL('admin','default','index')}}">
+    <i class="glyphicon glyphicon-cog"></i>
+    {{=T("admin")}}
+  </a>
+ </center>
+<h2>Lista de Préstamos Devueltos</h2>
+    <div class="w3-padding w3-white notranslate" style="width:90%">
+	<div style="width:100%">
+	<!-- <input class="form-control" id="myInput" type="text" placeholder="Search.."> -->
+	<br>
+	<!-- <table class="table table-bordered table-striped js-dynamitable"> -->
+    <table class="table table-bordered table-striped" id="demo">
+	<thead>
+	<tr style="text-transform: uppercase;">
+    <th>T&iacute;tulo</th>
+	<th>Institución</th>
+    <th>Fecha Pr&eacute;stamo</th>
+    <th>Fecha Devol.</th>
+	</tr>
+  	</thead>
+	<!-- <tbody id="myTable"> -->
+    <tbody>
+    {{contador=0}}
+    {{contadorusuarios=0}}
+    {{for prestamo in prestamos:}}
+        {{autores=""}}
+    {{titulos=""}}
+     {{if prestamo.titulo0!="":
+        titulos=prestamo.titulo0
+        contador=contador+1
+        pass}}
+    {{if prestamo.titulo1!="":
+        titulos=titulos+"| "+prestamo.titulo1
+        contador=contador+1
+        pass}}
+    {{if prestamo.titulo2!="":
+        titulos=titulos+"| "+prestamo.titulo2
+        contador=contador+1    
+    pass}}
+    {{if prestamo.titulo3!="":
+        titulos=titulos+"| "+prestamo.titulo3
+        contador=contador+1
+        pass}}
+     {{if prestamo.titulo4!="":
+        titulos=titulos+"| "+prestamo.titulo4
+        contador=contador+1
+        pass}}
+      {{if prestamo.titulo5!="":
+        titulos=titulos+"| "+prestamo.titulo5
+        contador=contador+1
+        pass}}
+      {{if prestamo.titulo6!="":
+        titulos=titulos+"| "+prestamo.titulo6
+        contador=contador+1
+        pass}}
+      {{if prestamo.titulo7!="":
+        titulos=titulos+"| "+prestamo.titulo7
+        contador=contador+1
+        pass}}
+       {{if prestamo.titulo8!="":
+        titulos=titulos+"| "+prestamo.titulo8
+        contador=contador+1
+        pass}}
+       {{if prestamo.titulo9!="":
+        titulos=titulos+"| "+prestamo.titulo9
+        contador=contador+1
+        pass}}
+    {{if prestamo.autor0!="":
+        autores=prestamo.autor0
+        pass}}
+    {{if prestamo.autor1!="":
+        autores=autores+"| "+prestamo.autor1
+        pass}}
+    {{if prestamo.autor2!="":
+        autores=autores+"| "+prestamo.autor2
+        pass}}
+    {{if prestamo.autor3!="":
+        autores=autores+"| "+prestamo.autor3
+        pass}}
+    {{if prestamo.autor4!="":
+        autores=autores+"| "+prestamo.autor4
+        pass}}
+    {{if prestamo.autor5!="":
+        autores=autores+"| "+prestamo.autor5
+        pass}}
+    {{if prestamo.autor6!="":
+        autores=autores+"| "+prestamo.autor6
+        pass}}
+    {{if prestamo.autor7!="":
+        autores=autores+"| "+prestamo.autor7
+        pass}}
+     {{if prestamo.autor8!="":
+        autores=autores+"| "+prestamo.autor8
+        pass}}
+      {{if prestamo.autor9!="":
+        autores=autores+"| "+prestamo.autor9
+        pass}}
+	<tr>
+    <td style="text-transform: uppercase;">{{=A(titulos,_href=URL('edicionprestamo',args=prestamo.id))}}</td>
+    <td style="text-transform: uppercase;">{{=prestamo.institucion}}({{=prestamo.tipoprestamo}})</td>
+        <td style="text-transform: uppercase;">{{=prestamo.fechaprestamo}}</td>
+        <td style="text-transform: uppercase;">{{=prestamo.fechadevolucion}}</td>
+    {{contadorusuarios=contadorusuarios+1}}
+	</tr>
+    {{pass}}
+	</tbody>
+	</table>
+    <h5>
+        Se han registrado {{=contador}} préstamos devueltos por {{=contadorusuarios}} usuario(s) 
+        </h5>
+	</div>
+	<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+   	var value = $(this).val().toLowerCase();
+	$("#myTable tr").filter(function() {
+	$(this).toggle( $(this).text().toLowerCase().indexOf(value) > -1);
+    });
+	});
+	});
+	</script>
+<script src="static/js/tablefilter.js"></script>
+
+<script data-config>
+    var filtersConfig = {
+        base_path: 'static/js/',
+        alternate_rows: true,
+        rows_counter: true,
+        btn_reset: true,
+        loader: true,
+        status_bar: true,
+        mark_active_columns: true,
+        highlight_keywords: true,
+        col_types: [
+            'string', 'string', 'string',
+            'string', 'string'
+        ]
+        //extensions:[{ name: 'sort' }]
+    };
+
+    var tf = new TableFilter('demo', filtersConfig);
+    tf.init();
+        </script>
+<script>
+ !function(t){"use strict";t.fn.dynamitable=function(e){var n=this,i=new function(t){this.getIndex=function(t){return t.parents("tr").children("td, th").index(t)},this.getBody=function(){return t.find("tbody")},this.getRows=function(){return this.getBody().children("tr")},this.getField=function(t,e){return e.children("td, th").eq(t)},this.getValue=function(t,e){return this.getField(t,e).text()}}(t(this));return this.filterList=[],this.displayAll=function(){return i.getRows().each(function(){t(this).show()}),this},this.filter=function(e,n){var r=new RegExp(n,"i");return i.getRows().each(function(){!0!==r.test(i.getValue(e,t(this)))&&t(this).hide()}),this},this.addFilter=function(e){n.filterList.push(e);var r=function(){n.displayAll(),t(n.filterList).each(function(e,r){t(n).find(r).each(function(){var e=t(this);n.filter(i.getIndex(e.parent("td, th")),e.val())})})};return t(e).on("change keyup keydown",r),r(),this},this.addSorter=function(e,r){return t(n).find(e).each(function(){var e=t(this),s=i.getIndex(e.parent("td, th"));e.on("click",function(){n.sorter(s,r)})}),this},this.sorter=function(e,n){return i.getBody().append(i.getRows().detach().sort(function(r,s){var d=i.getValue(e,t(r)),a=i.getValue(e,t(s)),c="desc"===n?!0:!1;return""!==d.replace(/[^\d-]/g,"")&&""!==a.replace(/[^\d-]/g,"")&&(d=parseFloat(d.replace(/[^\d,.-]/g,"")),a=parseFloat(a.replace(/[^\d,.-]/g,""))),d===a?0:d>a?c?1:-1:c?-1:1})),this},this},t(document).find(".js-dynamitable").each(function(){t(this).dynamitable().addFilter(".js-filter").addSorter(".js-sorter-asc","asc").addSorter(".js-sorter-desc","desc")})}(jQuery);
+        </script>
+    </div>
+{{elif 'content' in globals():}}
+{{=content}}
+{{else:}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}

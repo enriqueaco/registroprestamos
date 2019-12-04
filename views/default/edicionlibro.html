@@ -1,0 +1,45 @@
+{{extend 'layout.html'}}
+{{=form.custom.begin}}
+{{areas=['Area1','Area2','Area3','Area4','Area5','Area7','Area7','Area8','UCM','GAL','Hosped','Hosp Psiquiatrico','CPHE','UMHE','DMS CFG','B.Sangre','Pol Aguada','Pol Palmira','Pol Cruces','Hosp. Aguada','Pol Rodas','Pol Lajas','Pol Cumanayagua','Pol Abreus','Pol Cartagena','DMS Aguada','DMS Palmira','DMS Rodas','DMS Cruces','DMS Lajas','DMS Cumanayagua']}}
+{{unidades=['unidad01','unidad02','unidad03','unidad04','unidad05']}}
+{{autores=['autor01','autor02','autor03','autor04','autor05']}}
+<table align="center">
+<tr align="center"><td align="center">Libros</td></tr>
+<tr align="center"><td align="center">&nbsp;</td></tr>
+<tr><td align="center">
+<table>
+<tr><td>N&uacute;mero</td><td><input name="numero" value="{{=form.custom.inpval['numero']}}" readonly/></td></tr>
+<tr><td>Autor</td><td><input name="autor00" value="{{=form.custom.inpval['autor00']}}"/></td></tr>
+<tr><td>Unidad</td><td><select name="unidad00">
+{{for i in areas:}}
+    {{if i==form.custom.inpval['unidad00']:}}
+               <option value="{{=i}}" selected>{{=i}}</option>
+    {{else:}}
+    <option value="{{=i}}">{{=i}}</option>
+    {{pass}}
+{{pass}}
+    </select></td></tr>
+{{contador=0}}
+{{for j in autores:}}
+    {{if form.custom.inpval[j]!='':}}
+    <tr><td>Autor</td><td><input name="{{=j}}" value="{{=form.custom.inpval[j]}}"/></td></tr>
+    <tr><td>Unidad</td><td><select name="{{=unidades[contador]}}">
+        {{for i in areas:}}
+        {{if i==form.custom.inpval[unidades[contador]]:}}
+        <option value="{{=i}}" selected>{{=i}}</option>
+        {{else:}}
+        <option value="{{=i}}">{{=i}}</option>
+        {{pass}}
+        {{pass}}
+        </select></td></tr>
+    {{pass}}
+    {{contador=contador+1}}
+    {{pass}}
+<tr><td>T&iacute;tulo</td><td><input name="titulo" value="{{=form.custom.inpval['titulo']}}"/></td></tr>
+<tr><td>Fuente</td><td><input name="fuente" value="Libro" readonly/></td></tr>
+<tr><td>ISBN</td><td><input name="isbn" value="{{=form.custom.inpval['isbn']}}"/></td></tr>
+<tr><td>A&ntilde;o</td><td><input name="anno" value="{{=form.custom.inpval['anno']}}"/></td></tr>
+<tr><td colspan=2>{{=form.custom.submit}}</td></tr>
+</table>
+</td></tr></table>
+{{=form.custom.end}}

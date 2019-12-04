@@ -1,0 +1,380 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<center style="color:white">
+<img src="{{=URL('static','images/registroprestamos.jpg')}}" width="97%">
+</center>
+{{end}}
+{{if 'message' in globals():}}
+<center style="padding:50px">
+ <a class="btn btn-secondary" href="{{=URL('default','index',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Inicio')}}</a>
+  <a class="btn btn-secondary" href="{{=URL('default','prestamo',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Registrar Préstamo')}}</a>
+  <a class="btn btn-secondary" href="{{=URL('default','devueltos',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Préstamos Devueltos')}}</a>
+    <a class="btn btn-secondary" href="{{=URL('default','estadisticas',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Estadísticas')}}</a>
+      <a class="btn btn-secondary" href="{{=URL('default','modelo',vars=dict(s=MAX_PUBLICACIONES))}}">{{=T('Modelo')}}</a>
+    <a class="btn btn-primary" href="{{=URL('admin','default','index')}}">
+    <i class="glyphicon glyphicon-cog"></i>
+    {{=T("admin")}}
+  </a>
+ </center>
+<form enctype="multipart/form-data"
+action="{{=URL()}}" method="get">
+Escoja la fecha
+<input name="fecha" />
+<input type="submit" name="Buscar" value="Buscar" />
+{{areas=['Area1','Area2','Area3','Area4','Area5','Area7','Area7','Area8','UCM','GAL','Hosped','Hosp Psiquiatrico','CPHE','UMHE','DMS CFG','B.Sangre','Pol Aguada','Pol Palmira','Pol Cruces','Hosp. Aguada','Pol Rodas','Pol Lajas','Pol Cumanayagua','Pol Abreus','Pol Cartagena','DMS Aguada','DMS Palmira','DMS Rodas','DMS Cruces','DMS Lajas','DMS Cumanayagua']}}
+
+
+ Biblioteca</td><td><select name="biblioteca">
+                                    {{for i in areas:}}
+                                             <option value="{{=i}}">{{=i}}</option>
+                                    {{pass}}
+                                        </select>
+    
+</form>
+<br><br>
+Resultados
+<table class="table table-bordered table-striped" id="demo">
+	<thead>
+	<tr>
+    <th style="text-transform: uppercase;">Indice</th>
+    <th style="text-transform: uppercase;">Titulos</th>
+	<th style="text-transform: uppercase;">Autores</th>
+    <th style="text-transform: uppercase;">Institucion</th>
+         <th style="text-transform: uppercase;">Biblioteca</th>
+	</tr>
+  	</thead>
+	<!-- <tbody id="myTable"> -->
+    <tbody>
+    {{contador=0}}
+    {{nombrecompleto=dict()}}
+    {{contadorusers=0}}
+    {{nuevos=0}}
+    {{nombrec=''}}
+    {{arreglotitulos=dict()}}
+    {{arreglonuevos=dict()}}
+     {{for devolucion in devoluciones:}}
+     {{autores=""}}
+    {{titulos=""}}
+     {{if devolucion.titulo0!="":
+        titulos=devolucion.titulo0
+        contador=contador+1
+        pass}}
+     {{if devolucion.numero0.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+    {{if arreglotitulos.has_key(devolucion.titulo0):
+        arreglotitulos[devolucion.titulo0]=arreglotitulos[devolucion.titulo0]+1
+        else:
+        arreglotitulos[devolucion.titulo0]=1
+        pass}}
+    {{if devolucion.titulo1!="":
+        titulos=titulos+"| "+devolucion.titulo1
+          contador=contador+1
+        pass}}
+        {{if arreglotitulos.has_key(devolucion.titulo1):
+        arreglotitulos[devolucion.titulo1]=arreglotitulos[devolucion.titulo1]+1
+        else:
+        arreglotitulos[devolucion.titulo1]=1
+        pass}}
+     {{if devolucion.numero1.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+    {{if devolucion.titulo2!="":
+        titulos=titulos+"| "+devolucion.titulo2
+          contador=contador+1
+        pass}}
+    {{if arreglotitulos.has_key(devolucion.titulo2):
+        arreglotitulos[devolucion.titulo2]=arreglotitulos[devolucion.titulo2]+1
+        else:
+        arreglotitulos[devolucion.titulo2]=1
+        pass}}
+        {{if devolucion.numero2.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+       {{if devolucion.numero3.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+    {{if devolucion.titulo3!="":
+        titulos=titulos+"| "+devolucion.titulo3
+          contador=contador+1
+        pass}}
+     {{if arreglotitulos.has_key(devolucion.titulo3):
+        arreglotitulos[devolucion.titulo3]=arreglotitulos[devolucion.titulo3]+1
+        else:
+        arreglotitulos[devolucion.titulo3]=1
+        pass}}
+     {{if devolucion.titulo4!="":
+        titulos=titulos+"| "+devolucion.titulo4
+          contador=contador+1
+        pass}}
+      {{if arreglotitulos.has_key(devolucion.titulo4):
+        arreglotitulos[devolucion.titulo4]=arreglotitulos[devolucion.titulo4]+1
+        else:
+        arreglotitulos[devolucion.titulo4]=1
+        pass}}
+     {{if devolucion.numero4.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+      {{if devolucion.titulo5!="":
+        titulos=titulos+"| "+devolucion.titulo5
+          contador=contador+1
+        pass}}
+      {{if arreglotitulos.has_key(devolucion.titulo5):
+        arreglotitulos[devolucion.titulo5]=arreglotitulos[devolucion.titulo5]+1
+        else:
+        arreglotitulos[devolucion.titulo5]=1
+        pass}}
+     {{if devolucion.numero5.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+      {{if devolucion.titulo6!="":
+        titulos=titulos+"| "+devolucion.titulo6
+          contador=contador+1
+        pass}}
+      {{if arreglotitulos.has_key(devolucion.titulo6):
+        arreglotitulos[devolucion.titulo6]=arreglotitulos[devolucion.titulo6]+1
+        else:
+        arreglotitulos[devolucion.titulo6]=1
+        pass}}
+     {{if devolucion.numero6.lower()=="nuevo":
+        nuevos=nuevos+1
+        titulos=titulos+"(Nuevo)"
+        pass}}
+      {{if devolucion.titulo7!="":
+        titulos=titulos+"| "+devolucion.titulo7
+          contador=contador+1
+        pass}}
+       {{if arreglotitulos.has_key(devolucion.titulo7):
+        arreglotitulos[devolucion.titulo7]=arreglotitulos[devolucion.titulo7]+1
+        else:
+        arreglotitulos[devolucion.titulo7]=1
+        pass}}
+     {{if devolucion.numero7.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+       {{if devolucion.titulo8!="":
+        titulos=titulos+"| "+devolucion.titulo8
+          contador=contador+1
+        pass}}
+       {{if arreglotitulos.has_key(devolucion.titulo8):
+        arreglotitulos[devolucion.titulo8]=arreglotitulos[devolucion.titulo8]+1
+        else:
+        arreglotitulos[devolucion.titulo8]=1
+        pass}}
+       {{if devolucion.numero8.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+       {{if devolucion.titulo9!="":
+        titulos=titulos+"| "+devolucion.titulo9
+          contador=contador+1
+        pass}}
+       {{if arreglotitulos.has_key(devolucion.titulo9):
+        arreglotitulos[devolucion.titulo9]=arreglotitulos[devolucion.titulo9]+1
+        else:
+        arreglotitulos[devolucion.titulo9]=1
+        pass}}
+     {{if devolucion.numero9.lower()=="nuevo":
+        titulos=titulos+"(Nuevo)"
+        nuevos=nuevos+1
+        pass}}
+    {{if devolucion.autor0!="":
+        autores=devolucion.autor0
+        pass}}
+    {{if devolucion.autor1!="":
+        autores=autores+"| "+devolucion.autor1
+        pass}}
+    {{if devolucion.autor2!="":
+        autores=autores+"| "+devolucion.autor2
+        pass}}
+    {{if devolucion.autor3!="":
+        autores=autores+"| "+devolucion.autor3
+        pass}}
+    {{if devolucion.autor4!="":
+        autores=autores+"| "+devolucion.autor4
+        pass}}
+    {{if devolucion.autor5!="":
+        autores=autores+"| "+devolucion.autor5
+        pass}}
+    {{if devolucion.autor6!="":
+        autores=autores+"| "+devolucion.autor6
+        pass}}
+    {{if devolucion.autor7!="":
+        autores=autores+"| "+devolucion.autor7
+        pass}}
+     {{if devolucion.autor8!="":
+        autores=autores+"| "+devolucion.autor8
+        pass}}
+      {{if devolucion.autor9!="":
+        autores=autores+"| "+devolucion.autor9
+        pass}}
+          {{contadorusers=contadorusers+1}}
+         {{nombrec=devolucion.nombre+' '+devolucion.apellidos}}
+        {{if nombrecompleto.has_key(nombrec):
+        nombrecompleto[nombrec]=nombrecompleto[nombrec]+1
+        else:
+        nombrecompleto[nombrec]=1
+        pass}}
+        <tr style="text-transform: uppercase;">
+            <td>{{=devolucion.indice}}</td>
+            <td>{{=titulos}}</td>
+            <td>{{=autores}}</td>
+            <td>{{=devolucion.institucion}}({{=devolucion.tipoprestamo}})</td>
+            <td>{{=devolucion.biblioteca}}</td>
+        </tr>
+    {{pass}}
+    </tbody></table>
+     <h5>
+        Se han registrado {{=contador}} préstamos a {{=contadorusers}} usuario(s)  en total <br><br>
+        De dichos pr&eacute;stamos hay {{=nuevos}} de libros calificados como NUEVOS.
+        </h5>
+ <br><br>
+ Pr&eacute;stamos por Instituciones
+<br><br>
+    <table class="table table-bordered table-striped" id="demo">
+	<thead>
+	<tr style="text-transform: uppercase;">
+    <th>Instituci&oacute;n</th>
+    <th>Cantidad</th>
+	</tr>
+  	</thead>
+	<!-- <tbody id="myTable"> -->
+    <tbody>
+     {{for inst in instituciones:}}
+         <tr style="text-transform: uppercase;">
+            <td >{{=inst.registroprestamos01.institucion}}</td>
+             <td>{{=inst[cantinst]}}</td>
+        </tr>
+    {{pass}}
+    </tbody></table>
+ <br><br>
+ Pr&eacute;stamos seg&uacute;n Tipo de Pr&eacute;stamos
+<br><br>
+    <table class="table table-bordered table-striped" id="demo">
+	<thead>
+	<tr style="text-transform: uppercase;">
+    <th>Tipo de Pr&eacute;stamos</th>
+    <th>Cantidad</th>
+	</tr>
+  	</thead>
+	<!-- <tbody id="myTable"> -->
+    <tbody>
+     {{for tipop in tipoprestamos:}}
+         <tr style="text-transform: uppercase;">
+            <td>{{=tipop.registroprestamos01.tipoprestamo}}</td>
+             <td>{{=tipop[canttipop]}}</td>
+        </tr>
+    {{pass}}
+    </tbody></table>
+ <br><br>
+ Pr&eacute;stamos seg&uacute;n Categor&iacute;a del Solicitante
+<br><br>
+    <table class="table table-bordered table-striped" id="demo">
+	<thead>
+	<tr style="text-transform: uppercase;">
+    <th>Categor&iacute;a</th>
+    <th>Cantidad</th>
+	</tr>
+  	</thead>
+	<!-- <tbody id="myTable"> -->
+    <tbody>
+     {{for tipcat in categorias:}}
+         <tr style="text-transform: uppercase;">
+            <td>{{=tipcat.registroprestamos01.categoria}}</td>
+             <td>{{=tipcat[cantcateg]}}</td>
+        </tr>
+    {{pass}}
+    </tbody></table>
+<br><br>
+ Pr&eacute;stamos seg&uacute;n Solicitante
+<br><br>
+    <table class="table table-bordered table-striped" id="demo">
+	<thead>
+	<tr style="text-transform: uppercase;">
+    <th>Solicitante</th>
+    <th>Cantidad</th>
+	</tr>
+  	</thead>
+	<!-- <tbody id="myTable"> -->
+    <tbody>
+     {{import operator}}
+     {{for nom,cont in sorted(nombrecompleto.iteritems(),key=operator.itemgetter(1),reverse=True):}}
+           <tr style="text-transform: uppercase;">
+            {{if nom!='':}}
+            <td>{{=nom}}</td>
+             <td>{{=cont}}</td>
+            {{pass}}
+        </tr>
+    {{pass}}
+    </tbody></table>
+<br><br>
+ Pr&eacute;stamos seg&uacute;n T&iacute;tulos
+<br><br>
+    <table class="table table-bordered table-striped" id="demo">
+	<thead>
+	<tr style="text-transform: uppercase;">
+    <th>T&iacute;tulos</th>
+    <th>Cantidad</th>
+	</tr>
+  	</thead>
+	<!-- <tbody id="myTable"> -->
+    <tbody>
+     {{import operator}}
+     {{for nom,cont in sorted(arreglotitulos.iteritems(),key=operator.itemgetter(1),reverse=True):}}
+           <tr style="text-transform: uppercase;">
+            {{if nom!='':}}
+            <td>{{=nom}}</td>
+             <td>{{=cont}}</td>
+            {{pass}}
+        </tr>
+    {{pass}}
+    </tbody></table>
+   	<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+   	var value = $(this).val().toLowerCase();
+	$("#myTable tr").filter(function() {
+	$(this).toggle( $(this).text().toLowerCase().indexOf(value) > -1);
+    });
+	});
+	});
+	</script>
+<script src="static/js/tablefilter.js"></script>
+
+<script data-config>
+    var filtersConfig = {
+        base_path: 'static/js/',
+        alternate_rows: true,
+        rows_counter: true,
+        btn_reset: true,
+        loader: true,
+        status_bar: true,
+        mark_active_columns: true,
+        highlight_keywords: true,
+        col_types: [
+            'string', 'string', 'string',
+            'string', 'string', 'string'
+        ]
+        //extensions:[{ name: 'sort' }]
+    };
+
+    var tf = new TableFilter('demo', filtersConfig);
+    tf.init();
+        </script>
+<script>
+ !function(t){"use strict";t.fn.dynamitable=function(e){var n=this,i=new function(t){this.getIndex=function(t){return t.parents("tr").children("td, th").index(t)},this.getBody=function(){return t.find("tbody")},this.getRows=function(){return this.getBody().children("tr")},this.getField=function(t,e){return e.children("td, th").eq(t)},this.getValue=function(t,e){return this.getField(t,e).text()}}(t(this));return this.filterList=[],this.displayAll=function(){return i.getRows().each(function(){t(this).show()}),this},this.filter=function(e,n){var r=new RegExp(n,"i");return i.getRows().each(function(){!0!==r.test(i.getValue(e,t(this)))&&t(this).hide()}),this},this.addFilter=function(e){n.filterList.push(e);var r=function(){n.displayAll(),t(n.filterList).each(function(e,r){t(n).find(r).each(function(){var e=t(this);n.filter(i.getIndex(e.parent("td, th")),e.val())})})};return t(e).on("change keyup keydown",r),r(),this},this.addSorter=function(e,r){return t(n).find(e).each(function(){var e=t(this),s=i.getIndex(e.parent("td, th"));e.on("click",function(){n.sorter(s,r)})}),this},this.sorter=function(e,n){return i.getBody().append(i.getRows().detach().sort(function(r,s){var d=i.getValue(e,t(r)),a=i.getValue(e,t(s)),c="desc"===n?!0:!1;return""!==d.replace(/[^\d-]/g,"")&&""!==a.replace(/[^\d-]/g,"")&&(d=parseFloat(d.replace(/[^\d,.-]/g,"")),a=parseFloat(a.replace(/[^\d,.-]/g,""))),d===a?0:d>a?c?1:-1:c?-1:1})),this},this},t(document).find(".js-dynamitable").each(function(){t(this).dynamitable().addFilter(".js-filter").addSorter(".js-sorter-asc","asc").addSorter(".js-sorter-desc","desc")})}(jQuery);
+        </script>
+    </div>
+{{elif 'content' in globals():}}
+{{=content}}
+{{else:}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}

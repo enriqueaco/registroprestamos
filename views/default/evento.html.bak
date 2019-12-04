@@ -1,0 +1,60 @@
+{{extend 'layout.html'}}
+{{areas=['Area1','Area2','Area3','Area4','Area5','Area7','Area7','Area8','UCM','GAL','Hosped','Hosp Psiquiatrico','CPHE','UMHE','DMS CFG','B.Sangre','Pol Aguada','Pol Palmira','Pol Cruces','Hosp. Aguada','Pol Rodas','Pol Lajas','Pol Cumanayagua','Pol Abreus','Pol Cartagena','DMS Aguada','DMS Palmira','DMS Rodas','DMS Cruces','DMS Lajas','DMS Cumanayagua']}}
+<table align="center">
+    <tr align="center"><td align="center">Eventos</td></tr>
+    <tr align="center"><td align="center">&nbsp;</td></tr>
+    <tr><td align="center">
+    <form action="#" enctype="multipart/form-data" method="post">
+    <table>
+        <tr><td>N&uacute;mero</td><td><input name="numero" value="{{=str(int(request.vars['s'])+1)}}"/></td></tr>
+        <tr><td>Autor</td><td><input name="autor"/></td></tr>
+        <tr><td>Unidad</td><td><select name="unidad">
+                                    {{for i in areas:}}
+                                             <option value="{{=i}}">{{=i}}</option>
+                                    {{pass}}
+        </select></td></tr>
+        <tr><td colspan=2>Agregar otro autor &nbsp;<img src="{{=URL('static','images/add.png')}}" id="1" onclick="AddRow(this)"></td></tr>
+        <tr><td>T&iacute;tulo</td><td><input name="titulo"/></td></tr>
+        <tr><td>Fuente</td><td><input name="fuente" value="Evento" readonly/></td></tr>
+        <tr><td>Nombre del Evento</td><td><input name="nombreevento"/></td></tr>
+        <tr><td>Fecha del Evento</td><td><input name="fechaevento"/><br>(d&iacute;a-mes-a&ntilde;o)</td></tr>
+        <tr><td>CD</td><td><input name="cd"/></td></tr>
+        <tr><td>A&ntilde;o</td><td><input name="anno"/></td></tr>
+        <tr><td>Fecha Registro</td><td><input name="fecha" /><br>(d&iacute;a-mes-a&ntilde;o)</td></tr>
+    <tr><td colspan=2 align="center"><input type="submit" value="Registrar" /></td></tr>
+    <tr><td colspan=2><input type="hidden" name="_formname" value="eventos" /></td></tr>
+         <tr><td colspan=2><input id="contador" type="hidden" name="contador" value="1" /></td></tr>
+    </table>
+</form>
+</td></tr></table>
+    <script>
+    function AddRow(sender){
+    //var evt = event.srcElement.id;
+    var tarjet = sender.id;
+    var contador = document.getElementById("contador").value;
+    var btn_click = document.getElementById(tarjet);
+    tr_referred = btn_click.parentNode.parentNode;
+    //alert(contador);
+    var td = document.createElement('td');
+    var td1 = document.createElement('td');
+    var cadenaAutor='autor0'+contador;
+    td.innerHTML='Autor';
+    var cadenaUnidad='unidad0'+contador;
+    document.getElementById("contador").value=Number(contador)+1;
+    //td1.innerHTML='<input name="autor" />';
+    td1.innerHTML='<table><tr><td><input name="'+cadenaAutor+'" /></td><td><select name="'+cadenaUnidad+'">                                    {{for i in areas:}}<option value="{{=i}}">{{=i}}</option>{{pass}}</select></td></tr></table>'
+    //<tr><td>Unidad</td><td><select name="unidad">                                    {{for i in areas:}}<option value="{{=i}}">{{=i}}</option>{{pass}}</select></td></tr>';
+    var tr = document.createElement('tr');
+    tr.appendChild(td);
+    tr.appendChild(td1);
+    //var tr1 = document.createElement('tr');
+    //tr1.appendChild(td);
+    //tr1.appendChild(td1);
+    //var tr = '<tr><td>Unidad</td><td><select name="unidad">{{for i in areas:}}<option value="{{=i}}">{{=i}}</option>{{pass}}</select></td></tr>';
+    tr_referred.parentNode.insertBefore(tr,tr_referred);
+    //tr_referred.parentNode.insertBefore(tr1,tr_referred.nextSibling);
+    return tr;
+    //return 0;
+    }
+</script>
+{{=BEAUTIFY(response._vars)}}

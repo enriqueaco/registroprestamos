@@ -1,0 +1,22 @@
+{{extend 'layout.html'}}
+<table align="center">
+    <tr align="center"><td align="center">Eventos</td></tr>
+    <tr align="center"><td align="center">&nbsp;</td></tr>
+    <tr><td align="center">
+    <form action="#" enctype="multipart/form-data" method="post">
+    <table>
+        <tr><td>N&uacute;mero</td><td><input name="numero"/></td></tr>
+        <tr><td>Autor</td><td><input name="autor"/></td></tr>
+        <tr><td>Unidad</td><td><select name="unidad"><option value="Area 1">Area 1</option><option value="Area 2">Area 2</option></select></td></tr>
+        <tr><td>T&iacute;tulo</td><td><input name="titulo"/></td></tr>
+        <tr><td>Fuente</td><td><input name="fuente" value="Libro" readonly/></td></tr>
+        <tr><td>Nombre del Evento</td><td><input name="nombreevento"/></td></tr>
+        <tr><td>Fecha del Evento</td><td><input name="fechaevento"/></td></tr>
+        <tr><td>CD</td><td><input name="cd"/></td></tr>
+        <tr><td>Fecha Registro</td><td><input name="fecha" /><br>(d&iacute;a-mes-a&ntilde;o)</td></tr>
+    <tr><td colspan=2 align="center"><input type="submit" value="Registrar" /></td></tr>
+    <tr><td colspan=2><input type="hidden" name="_formname" value="eventos" /></td></tr>
+    </table>
+</form>
+</td></tr></table>
+{{=BEAUTIFY(response._vars)}}

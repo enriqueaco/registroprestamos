@@ -1,0 +1,61 @@
+{{extend 'layout.html'}}
+{{=form.custom.begin}}
+{{areas=['Area1','Area2','Area3','Area4','Area5','Area7','Area7','Area8','UCM','GAL','Hosped','Hosp Psiquiatrico','CPHE','UMHE','DMS CFG','B.Sangre','Pol Aguada','Pol Palmira','Pol Cruces','Hosp. Aguada','Pol Rodas','Pol Lajas','Pol Cumanayagua','Pol Abreus','Pol Cartagena','DMS Aguada','DMS Palmira','DMS Rodas','DMS Cruces','DMS Lajas','DMS Cumanayagua']}}
+{{titulos=['titulo0','titulo1','titulo2','titulo3','titulo4','titulo5','titulo6','titulo7','titulo8','titulo9']}}
+{{autores=['autor0','autor1','autor2','autor3','autor4''autor5','autor6','autor7','autor8','autor9']}}
+{{volumenes=['volumen0','volumen1','volumen2','volumen3','volumen4','volumen5','volumen6','volumen7','volumen8','volumen9']}}
+{{numeros=['numero0','numero1','numero2','numero3','numero4','numero5','numero6','numero7','numero8','numero9']}}
+{{codigos=['codigo0','codigo1','codigo2','codigo3','oodigo4','codigo5','codigo6','codigo7','codigo8','codigo9']}}
+{{devolucion=['Prestado','Devuelto']}}
+<table align="center">
+    <tr align="center"><td align="center">Préstamos</td></tr>
+    <tr align="center"><td align="center">&nbsp;</td></tr>
+    <tr><td align="center">
+                            <form action="#" enctype="multipart/form-data" method="post">
+                                <table>
+                                    <tr><td>Consecutivo</td><td><input name="indice" readonly  value="{{=form.custom.inpval['indice']}}"/></td></tr>
+                                    <tr><td>Tipo de Prestamos</td><td>
+                                        {{tipoprestamo=form.custom.inpval['tipoprestamo']}}
+                                        {{=SELECT('sala','circulante','interbibliotecario',_name='tipoprestamo',value=tipoprestamo)}}
+                                    </td></tr>
+{{contador=0}}
+{{for j in titulos:}}
+    {{if form.custom.inpval[j]!='':}}
+                                    <tr><td  colspan=2><table align="center"><tr><td>Titulo</td><td><input name="{{=j}}" value="{{=form.custom.inpval[j]}}" style="text-transform:uppercase"/></td></tr><tr><td>Codigo</td><td><input name="{{=codigos[contador]}}" value="{{=form.custom.inpval[codigos[contador]]}}" style="text-transform:uppercase"/></td></tr><tr><td>Autor</td><td><input name="{{=autores[contador]}}" value="{{=form.custom.inpval[autores[contador]]}}" style="text-transform:uppercase" /></td></tr><tr><td>Volumen</td><td><input name="{{=volumenes[contador]}}" value="{{=form.custom.inpval[volumenes[contador]]}}" style="text-transform:uppercase"/></td></tr><tr><td>Numero</td><td><input name="{{=numeros[contador]}}" style="text-transform:uppercase" value="{{=form.custom.inpval[numeros[contador]]}}"/></td></tr></table></td></tr>
+    {{pass}}
+    {{contador=contador+1}}
+    {{pass}}
+                                        <tr><td>Categoría del Solicitante</td><td>
+                                        {{especialidad=form.custom.inpval['categoria']}}
+                                        {{=SELECT('Estudiante de Medicina','Estudiante de Estomatologia','Estudiante de Lic en Enfermeria','Estudiante de Tecnologias','Medico','Estomatologo','Tecnico','Profesor','Otro',_name='categoria',value=especialidad)}}
+                                       </td></tr>
+                                    <tr><td>Nombre</td><td><input name="nombre" value="{{=form.custom.inpval['nombre']}}" style="text-transform:uppercase"/></td></tr>
+                                    <tr><td>Apellidos</td><td><input name="apellidos" value="{{=form.custom.inpval['apellidos']}}" style="text-transform:uppercase"/></td></tr>
+                                     <tr><td>Institucion</td><td><select name="institucion">
+                                    {{for i in areas:}}
+                                           {{if i==form.custom.inpval['institucion']:}}
+                                          <option value="{{=i}}" selected>{{=i}}</option>
+                                           {{else:}}
+                                          <option value="{{=i}}">{{=i}}</option>
+                                           {{pass}}
+                                     {{pass}}
+                                        </select></td></tr>
+                                    <tr><td>Correo Electr&oacute;nico</td><td><input name="email" value="{{=form.custom.inpval['email']}}"/></td></tr>
+                                    <tr><td>Carnet de Ident.</td><td><input name="ci" value="{{=form.custom.inpval['ci']}}" style="text-transform:uppercase" /></td></tr>
+                                    <tr><td>Nota</td><td><input name="nota" value="{{=form.custom.inpval['nota']}}" style="text-transform:uppercase"/></td></tr>
+                                    <tr><td>Fecha de Prestamo</td><td><input name="fechaprestamo" value="{{=form.custom.inpval['fechaprestamo']}}"/><br>(d&iacute;a-mes-a&ntilde;o)</td></tr>
+                                     <tr><td>Fecha de Devolución</td><td><input name="fechadevolucion" value="{{=form.custom.inpval['fechadevolucion']}}"/><br>(d&iacute;a-mes-a&ntilde;o)</td></tr>
+                                    <tr><td>Devuelto</td><td><select name="devuelto">
+                                        {{for i in range(2):}}
+                                        {{if i==form.custom.inpval['devuelto']:}}
+                                        <option value="{{=i}}" selected>{{=devolucion[i]}}</option>
+                                           {{else:}}
+                                          <option value="{{=i}}">{{=devolucion[i]}}</option>
+                                           {{pass}}
+                                     {{pass}}
+                                        </select></td></tr>
+                                    <tr><td colspan=2>{{=form.custom.submit}}&nbsp;&nbsp;<button type="button"  onclick="window.location='{{=URL('devueltos')}}'">Cancelar</button></td></tr>
+                                    </table>
+                                    </form>
+</td></tr></table>
+{{=form.custom.end}}

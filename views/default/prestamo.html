@@ -1,0 +1,98 @@
+{{extend 'layout.html'}}
+{{areas=['Area1','Area2','Area3','Area4','Area5','Area 6','Area7','Area7','Area8','UCM','GAL','Hosped','Hosp Psiquiatrico','CPHE','UMHE','DMS CFG','B.Sangre','Pol Aguada','Pol Palmira','Pol Camarones','Pol Cruces','Hosp. Aguada','Pol Rodas','Pol Lajas','Pol Cumanayagua','Pol Abreus','Pol Yaguaramas','Pol Cartagena','DMS Aguada','DMS Palmira','DMS Rodas','DMS Cruces','DMS Lajas','DMS Cumanayagua']}}
+<table align="center" border=0>
+    <tr align="center"><td align="center">Préstamos</td></tr>
+    <tr align="center"><td align="center">&nbsp;</td></tr>
+    <tr><td align="center">
+                            <form action="#" enctype="multipart/form-data" method="post">
+                                <table>
+                                    <tr><td>Consecutivo</td><td><input name="indice" readonly value="{{=str(int(request.vars['s'])+1)}}"/></td></tr>
+                                    <tr><td>Tipo de Prestamos</td><td><select name="tipoprestamo" >
+                                        <option value="sala">Sala</option>
+                                        <option value="circulante">Circulante</option>
+                                        <option value="interbibliotecario">Interbibliotecario</option>
+                                        </select></td></tr>
+                                    <tr><td>T&iacute;tulo</td><td><input name="titulo0" style="text-transform:uppercase"/></td></tr>
+                                    <tr><td>C&oacute;digo</td><td><input name="codigo0" style="text-transform:uppercase"/></td></tr>
+                                     <tr><td>Autor</td><td><input name="autor0" style="text-transform:uppercase"/></td></tr>
+                                     <tr><td>Volumen</td><td><input name="volumen0" style="text-transform:uppercase"/>
+                                      <tr><td>Numero</td><td><input name="numero0" style="text-transform:uppercase"/>(Especifique escribiendo NUEVO si es libro reciente)
+                                         </td></tr>
+                                      <tr><td colspan=2>Agregar otro pr&eacute;stamo &nbsp;<img src="{{=URL('static','images/add.png')}}" id="1" onclick="AddRow(this)"></td></tr>
+                                    <tr><td>Categoría del Solicitante</td><td><select name="categoria" >
+                                        <option value="Estudiante de Medicina">Estudiante de Medicina</option>
+                                        <option value="Estudiante de Estomatologia">Estudiante de Estomatologia</option>
+                                        <option value="Estudiante de Lic en Enfermeria">Estudiante de Lic en Enfermeria</option>
+                                        <option value="Estudiante de Tecnologias">Estudiante de Tecnologias</option>
+                                        <option value="Medico">Medico</option>
+                                        <option value="Estomatologo">Estomatologo</option>
+                                        <option value="Tecnico">Tecnico</option>
+                                        <option value="Profesor">Profesor</option>
+                                        <option value="Otro">Otro</option>
+                                        </select></td></tr>
+                                    <tr><td>Nombre</td><td><input name="nombre" style="text-transform:uppercase"/></td></tr>
+                                    <tr><td>Apellidos</td><td><input name="apellidos" style="text-transform:uppercase"/></td></tr>
+                                     <tr><td>Institucion</td><td><select name="institucion">
+                                    {{for i in areas:}}
+                                             <option value="{{=i}}">{{=i}}</option>
+                                    {{pass}}
+                                        </select></td></tr>
+                                     <tr><td>Carnet de Ident.</td><td><input name="ci" style="text-transform:uppercase"/></td></tr>
+                                      <tr><td>Nota</td><td><input name="nota" style="text-transform:uppercase"/></td></tr>
+                                    <tr><td>Correo Electr&oacute;nico</td><td><input name="email"/></td></tr>
+                                    <tr><td>Fecha de Prestamo</td><td><input id="fechap" name="fechaprestamo" /><br>(d&iacute;a-mes-a&ntilde;o)</td></tr>
+                                     <tr><td>Fecha de Devolución</td><td><input id="fechad" name="fechadevolucion"/><br>(d&iacute;a-mes-a&ntilde;o)</td></tr>
+                                     <tr><td>Biblioteca</td><td><select name="biblioteca">
+                                    {{for i in areas:}}
+                                             <option value="{{=i}}">{{=i}}</option>
+                                    {{pass}}
+                                        </select></td></tr>
+                                    <tr><td colspan=2 align="center"><input type="hidden" name="devuelto" value="0" /></td></tr>
+                                         <tr><td colspan=2 align="center"><input type="hidden" name="usuario" value="{{=usuario}}" /></td></tr>
+                                         <tr><td colspan=2 align="center"><input type="submit" value="Registrar" />&nbsp;&nbsp;<button type="button"  onclick="window.location='{{=URL('index')}}'">Cancelar</button></td></tr>
+                                    <tr><td colspan=2><input type="hidden" name="_formname" value="prestamo" /></td></tr>
+                                    <tr><td colspan=2><input id="contador" type="hidden" name="contador" value="1" /></td></tr>
+                                    </table>
+                                    </form>
+</td></tr></table>
+<script>
+    $("#fechap").keyup(function(){
+    $("#fechad").val($(this).val());
+    })
+</script>
+
+ <script>
+    function AddRow(sender){
+    //var evt = event.srcElement.id;
+    var tarjet = sender.id;
+    var contador = document.getElementById("contador").value;
+    var btn_click = document.getElementById(tarjet);
+    tr_referred = btn_click.parentNode.parentNode;
+    //alert(contador);
+    var td = document.createElement('td');
+    var td1 = document.createElement('td');
+    var cadenatitulo='titulo'+contador;
+    td.innerHTML='<td><table><tr><td>Titulo</td></tr><tr><td>Codigo</td></tr><tr><td>Autor</td></tr><tr><td>Volumen</td></tr><tr><td>Numero</td></tr></table></td>';
+    var cadenacodigo='codigo'+contador;
+    var cadenaautor='autor'+contador;
+     var cadenavolumen='volumen'+contador;
+      var cadenanumero='numero'+contador;
+    document.getElementById("contador").value=Number(contador)+1;
+    //td1.innerHTML='<input name="autor" />';
+    td1.innerHTML='<table align="center"><tr><td>Titulo</td><td><input name="'+cadenatitulo+'" style="text-transform:uppercase"/></td></tr><tr><td>Codigo</td><td><input name="'+cadenacodigo+'" style="text-transform:uppercase"/></td></tr><tr><td>Autor</td><td><input name="'+cadenaautor+'" style="text-transform:uppercase"/></td></tr><tr><td>Volumen</td><td><input name="'+cadenavolumen+'" style="text-transform:uppercase"/></td></tr><tr><td>Numero</td><td><input name="'+cadenanumero+'" style="text-transform:uppercase"/>(Especifique escribiendo NUEVO si es libro reciente)</td></tr><table>'
+    //<tr><td>Unidad</td><td><select name="unidad">                                    {{for i in areas:}}<option value="{{=i}}">{{=i}}</option>{{pass}}</select></td></tr>';
+    var tr = document.createElement('tr');
+     td1.setAttribute("colSpan","2");
+       tr.setAttribute("align","center");
+    //tr.appendChild(td);
+    tr.appendChild(td1);
+    //var tr1 = document.createElement('tr');
+    //tr1.appendChild(td);
+    //tr1.appendChild(td1);
+    //var tr = '<tr><td>Unidad</td><td><select name="unidad">{{for i in areas:}}<option value="{{=i}}">{{=i}}</option>{{pass}}</select></td></tr>';
+    tr_referred.parentNode.insertBefore(tr,tr_referred);
+    //tr_referred.parentNode.insertBefore(tr1,tr_referred.nextSibling);
+    return tr;
+    //return 0;
+    }
+</script>
